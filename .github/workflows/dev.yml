@@ -9,7 +9,6 @@ jobs:
   dev-workflow:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Starting the dev workflow"
       - name: Checkout
         uses: actions/checkout@v4
       - name: Run a multi-line script
@@ -22,5 +21,19 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-      - name: Ending the dev workflow
-        run: echo "Ending the dev workflow"
+
+  test-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.x'
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
+      - run: echo "Tests passed successfully"
+      

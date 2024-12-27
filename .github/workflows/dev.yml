@@ -1,0 +1,26 @@
+name: Push to master
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  dev-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Starting the dev workflow"
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run a multi-line script
+        run: |
+          echo "This is a multi-line script"
+          echo "It is running on the runner in a container"
+      - name: List files
+        run: ls ${{ github.workspace }}
+      - name: Print Github Context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Ending the dev workflow
+        run: echo "Ending the dev workflow"
